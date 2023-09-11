@@ -15,7 +15,7 @@ public class ThreadLinuxPing extends Thread {
 
     @Override
     public void run() {
-        StringBuilder comando = new StringBuilder("ping -4 -n 10 ");
+        StringBuilder comando = new StringBuilder("ping -4 -c 10 ");
         comando.append(servidorURL);
 
         try {
@@ -24,9 +24,8 @@ public class ThreadLinuxPing extends Thread {
             InputStreamReader leitor = new InputStreamReader(fluxo);
             BufferedReader buffer = new BufferedReader(leitor);
 
-            //Ignora as duas primeiras linhas
+            //Ignora a primeira linha
             //Forma melhor: https://stackoverflow.com/a/64917411
-            buffer.readLine();
             buffer.readLine();
 
             //Printa as 10 primeiras linhas e copia a última linha
@@ -64,8 +63,8 @@ public class ThreadLinuxPing extends Thread {
 
     public void exibirMedia(String linha) {
         //Pega apenas a média da última linha
-        String[] linhaDividida = linha.split(" = ");
-        String media = linhaDividida[linhaDividida.length - 1];
+        String[] linhaDividida = linha.split("/");
+        String media = linhaDividida[linhaDividida.length - 3];
 
         System.out.println(">>> Média [" + servidorNome + "] = " + media);
     }
